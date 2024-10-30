@@ -3,7 +3,7 @@ import requests
 
 
 def should_retry(status_code):
-    # Define os códigos de status que devem acionar um retry
+    # Define the status codes that should trigger a retry
     retry_statuses = [500, 502, 503, 504]
     return status_code in retry_statuses
 
@@ -13,26 +13,26 @@ def make_request_with_retry(url, max_retries=5):
     while retry_count < max_retries:
         response = requests.get(url)
         if response.status_code == 200:
-            print("Requisição bem-sucedida")
+            print("Successful request")
             return response
         elif should_retry(response.status_code):
             retry_count += 1
-            wait_time = 2 ** retry_count  # Backoff exponencial
+            wait_time = 2 ** retry_count  # Exponential backoff
             print(
-                f"Erro {response.status_code}: Tentativa {retry_count} de {max_retries}. Tentando novamente em {wait_time} segundos...")
+                f"Error {response.status_code}: Attempt {retry_count} of {max_retries}. Retrying in {wait_time} seconds...")
             time.sleep(wait_time)
         else:
-            print(f"Erro {response.status_code}: Não é possível tentar novamente.")
+            print(f"Error {response.status_code}: Retry not possible.")
             return response
-    print("Número máximo de tentativas alcançado.")
+    print("Maximum retry attempts reached.")
     return None
 
 
 def main():
-    url = "https://exemplo.com/api"
+    url = "https://example.com/api"
     response = make_request_with_retry(url)
     if response:
-        print("Resposta:", response.content)
+        print("Response:", response.content)
 
 
 if __name__ == "__main__":

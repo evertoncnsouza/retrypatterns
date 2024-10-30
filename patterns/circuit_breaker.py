@@ -30,8 +30,8 @@ class CircuitBreaker:
 
 
 def potentially_failing_task():
-    print("Tentando realizar a tarefa...")
-    raise Exception("Erro na tarefa")
+    print("Attempting to perform the task...")
+    raise Exception("Task error")
 
 
 def main():

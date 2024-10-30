@@ -12,11 +12,11 @@ def main():
     max_retries = 10
     for attempt in range(max_retries):
         try:
-            print("Tentando realizar a tarefa...")
-            raise Exception("Erro na tarefa")
+            print("Attempting to perform the task...")
+            raise Exception("Task error")
         except Exception as e:
             wait_time = fibonacci_backoff(attempt)
-            print(f"Erro: {e}. Tentando novamente em {wait_time} segundos...")
+            print(f"Error: {e}. Retrying in {wait_time} seconds...")
             time.sleep(wait_time)
 
 

@@ -28,9 +28,9 @@ class TokenBucket:
 
 
 def process_task(task_id):
-    print(f"Tentando processar a tarefa {task_id}...")
+    print(f"Attempting to process task {task_id}...")
     if task_id % 2 == 0:
-        raise Exception(f"Erro na tarefa {task_id}")
+        raise Exception(f"Error in task {task_id}")
 
 
 def retry_task(task_id, bucket):
@@ -38,19 +38,19 @@ def retry_task(task_id, bucket):
         if bucket.consume_token():
             try:
                 process_task(task_id)
-                print(f"Tarefa {task_id} concluída com sucesso.")
+                print(f"Task {task_id} completed successfully.")
                 return
             except Exception as e:
-                print(f"{e}. Tentando novamente.")
+                print(f"{e}. Retrying.")
                 time.sleep(1)
         else:
-            print(f"Sem tokens disponíveis para a tarefa {task_id}. Aguardando...")
+            print(f"No tokens available for task {task_id}. Waiting...")
             time.sleep(1)
             bucket.add_tokens()
 
 
 def main():
-    token_bucket = TokenBucket(rate=1, capacity=5)  # 1 token por segundo, capacidade máxima de 5 tokens
+    token_bucket = TokenBucket(rate=1, capacity=5)  # 1 token per second, max capacity of 5 tokens
     tasks = range(10)
     threads = []
     for task_id in tasks:

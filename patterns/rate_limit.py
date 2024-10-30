@@ -2,8 +2,8 @@ import time
 
 
 def process_task():
-    print("Tentando realizar a tarefa...")
-    raise Exception("Erro no processamento")
+    print("Attempting to perform the task...")
+    raise Exception("Processing error")
 
 
 def retry_with_rate_limit(task, max_retries=5, rate_limit=2):
@@ -11,15 +11,15 @@ def retry_with_rate_limit(task, max_retries=5, rate_limit=2):
     while retry_count < max_retries:
         try:
             task()
-            print("Tarefa concluída com sucesso.")
+            print("Task completed successfully.")
             return
         except Exception as e:
             retry_count += 1
             if retry_count >= max_retries:
-                print(f"Erro: {e}. Tentativas máximas alcançadas, parando retries.")
+                print(f"Error: {e}. Maximum attempts reached, stopping retries.")
                 return
             print(
-                f"Erro: {e}. Tentativa {retry_count} de {max_retries}. Tentando novamente em {rate_limit} segundos...")
+                f"Error: {e}. Attempt {retry_count} of {max_retries}. Retrying in {rate_limit} seconds...")
             time.sleep(rate_limit)
 
 
