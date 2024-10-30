@@ -1,6 +1,5 @@
 from patterns import immediate_retry
 from patterns import fixed_interval_retry
-from patterns import exponential_backoff_sem_jitter
 from patterns import exponential_backoff_with_jitter
 from patterns import circuit_breaker
 from patterns import fibonacci_backoff
